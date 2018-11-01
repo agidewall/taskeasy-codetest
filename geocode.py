@@ -13,3 +13,17 @@ def translate(address, city, state):
 def toURL(text):
     text.replace(" ", "+")
     return text
+	
+def toRows(file):
+    rows = file.splitlines()
+    return rows
+	
+def toJSON(string):
+    tuple = string.split(',')
+    data = translate(toURL(tuple[1]), toURL(tuple[2]), toURL(tuple[3]))
+    return data
+	
+def writeHTML(js):
+    lat = js['geometry']['location']['lat']
+	lng = js['geometry']['location']['lng']
+    return "<p>Latitude: " + lat + " Longitude: " + lng + "</p>"
