@@ -3,6 +3,7 @@
 import sys
 
 from flask import Flask, render_template, request, redirect, Response
+from geocode import translate
 import random, json, urllib, time
 
 app = Flask(__name__)
@@ -19,20 +20,10 @@ def upload_file():
 	    f.save('/uploads/uploaded_file.txt')
 	    return 'saved file'
 
-@app.route('/geo_address', method="post")		
-def geoApi(address, api="", delay=5)
-    base = "https://maps.googleapis.com/maps/api/geocode/json?"
-	addP = "address=" + address.replace(" ", "+")
-	geoURL = base + addP + "&key" + api
-	response = urllib.urlopen(geoURL)
-	jsonData = json.loads(response.read())
-	if jsonData['status'] == 'OK':
-	    resu = jsonData['results'][0]
-		finList = [resu['formatted_address'], resu['geometry']['location']['lat'], resu['geometry']['location']['lng']]
-	else:
-	    finList = [None, None, None]
-	time.sleep(delay)
-	return finList
+@app.route('/geo_address', methods=['GET', 'POST'])		
+def geoApi():
+    js = translate('201+E+South+Temple', 'Salt+Lake+City', 'UT')
+    return render_template('address_page.html', info=js)
 	
 if __name__ == 'main':
     app.run()
