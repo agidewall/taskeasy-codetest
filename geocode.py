@@ -9,3 +9,7 @@ def translate(address, city, state):
     if r.status_code != 200:
         return _('Error: the translation service failed.')
     return json.loads(r.content.decode('utf-8-sig'))
+	
+def toURL(text):
+    text.replace(" ", "+")
+    return text
